@@ -1,6 +1,8 @@
 """
 Sistema de Arquivos - Manipulação
 
+https://docs.python.org/3/library/os.html?highlight=os#module-os
+
 # Descobrindo se um arquivo ou diretorio existe
 
 #Arquivo
@@ -117,15 +119,67 @@ pip install send2trash
 
 from send2trash import send2trash
 
+# Importando a biblioteca send2trash (Envia arquivos e diretorios para lixeira)
+
 os.remove('outro1.txt') # Não vai para a lixeira. E deletado imediatamente
 
 send2trash('outro.txt') # Vai para lixeira. Pode ser restaurado
 
-"""
+#OBS: Se o arquivo não existir, teremos OSError
+
+send2trash('Teste') # Diretorio 
+
+
+# Criando um diretorio temporario
 import os
+import tempfile
 
-# Importando a biblioteca send2trash
+with tempfile.TemporaryDirectory() as tmp:
+    print(f'Criei o diretorio temporario em {tmp}')
+    with open(os.path.join(tmp, 'arquivo_temporario.txt'), 'w') as arquivo:
+        arquivo.write('Geek University\n')
+    input()
 
-from send2trash import send2trash
+# Estamos criando um diretorio temporario, abrindo o mesmo e dentro dele criando
+# um arquivo para escrevermos um texto. No final, usamos um input() só para mantermos
+# os arquivos temporarios 'vivos' dentro dos blocos with.
 
+# OBS: possivelmente, o codigo acima não irá funcionar se você estiver utilizando
+# o windows. Por conta desse sistema trabalhar se forma diferente com arquivos temporários.
+
+
+# Criando um arquivo temporario
+
+with tempfile.TemporaryFile() as tmp:
+    tmp.write(b'Geek University\n')
+    tmp.seek(0)
+    print(tmp.read())
+
+# OBS: Em arquivos temporarios só conseguimos escrever bits. Por isso, utilizamos b'string'
+
+import os
+import tempfile
+
+arquivo = tempfile.TemporaryFile()
+arquivo.write(b'Geek University')
+arquivo.seek(0)
+print(arquivo.read())
+arquivo.close()
+
+
+import os
+import tempfile
+
+arquivo = tempfile.NamedTemporaryFile()
+
+arquivo.write(b'Geek University\n')
+
+print(arquivo.name)
+
+print(arquivo.read())
+
+arquivo.close
+
+input()
+"""
 
