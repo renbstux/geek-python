@@ -178,4 +178,18 @@ p2 = Produto('Arroz', 'Mercearia', 5.99)
 p2.peso = '5Kg' # Note que na classe Produto não existe o atributo peso
 
 print(f'Produto: {p2.nome}, Descrição: {p2.descricao}, Valor R$: {p2.valor}, Peso: {p2.peso}')
-print(f'Produto: {p1.nome}, Descrição: {p1.descricao}, Valor R$: {p1.valor}, Peso: {p1.peso}')
+#print(f'Produto: {p1.nome}, Descrição: {p1.descricao}, Valor R$: {p1.valor}, Peso: {p1.peso}') #AttributeError
+
+# Deletando Atributos
+
+print(p1.__dict__)
+print(p2.__dict__)
+
+#print(Produto.__dict__)
+
+del p2.peso # Remove um atributo 
+del p2.descricao
+del p2.valor
+
+print(p1.__dict__)
+print(p2.__dict__)
