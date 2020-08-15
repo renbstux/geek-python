@@ -75,6 +75,7 @@ class Produto:
         '''Retorna o valor do produto com desconto'''
         return (self.__valor * (100 - porcentagem)) / 100
 
+# Para instalar o passlib o seguinte comando: pip install passlib
 from passlib.hash import pbkdf2_sha256 as cryp
 class Usuario:
 
