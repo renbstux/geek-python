@@ -39,7 +39,51 @@ print(user2.nome_completo())
 
 print(f'Senha User1: {user1._Usuario__senha}') # Acesso de forma errada de um atributo de classe
 print(f'Senha User2: {user2._Usuario__senha}') # Acesso de forma errada de um atributo de classe
+
+
+
+nome = input('Informe o nome:')
+sobrenome = input('Informe o sobrenome: ')
+email = input('Informe o seu e-mail: ')
+senha = input('Informe a sua senha: ')
+confirma_senha = input('Confirme a sua senha: ')
+
+if senha == confirma_senha:
+    user = Usuario(nome, sobrenome, email, senha)
+else:
+    print('Senha não Confere!')
+    exit(1)
+
+print('Usuario criado com sucesso!')
+
+senha = input('Informe a senha para acesso: ')
+
+if user.checa_senha(senha):
+    print('Acesso Permitido')
+else:
+    print('Acesso Negado')
+
+print(f'Senha User Criptografada: {user._Usuario__senha}') # Acesso Errado
+
+# Métodos de Classe em Python são conhecidos como Métodos estaticos em outras linguagens
+
+
+# Metodos de Classe
+
+user = Usuario('Renato', 'Souza', 'renbs@hotmail.com', '123456')
+
+Usuario.conta_usuario() # Forma correta
+user.conta_usuario() # Possivel, mas incorreta
+
+
+# Métodos Privados
+
+user = Usuario('Renato', 'Souza', 'renbs@hotmail.com', '123456')
+
+print(user._Usuario__gera_usuario()) # Acesso de forma ruim...
 """
+
+
 
 class Lampada:
 
@@ -79,11 +123,25 @@ class Produto:
 from passlib.hash import pbkdf2_sha256 as cryp
 class Usuario:
 
-    def __init__(self, nome, sobrenome, email, senha):
+    contador = 0
+
+    @classmethod # Decorator - Atributos de Classe
+    def conta_usuario(cls): # convenção do Python - cls igual a class
+        print(f'Classe: {cls}')
+        print(f'Temos {cls.contador} usuário(s) no sistema')
+
+    @staticmethod
+    def definicao():
+        return 'UXR344'
+
+    def __init__(self, nome, sobrenome, email, senha): # Atributos de instancias
+        self.__id = Usuario.contador + 1
         self.__nome = nome
         self.__sobrenome = sobrenome
         self.__email = email
         self.__senha = cryp.hash(senha, rounds=200000, salt_size=16)
+        Usuario.contador = self.__id 
+        print(f'Usuario criado: {self.__gera_usuario()}')
 
     def nome_completo(self):
         return f'{self.__nome} {self.__sobrenome}'
@@ -93,25 +151,17 @@ class Usuario:
             return True
         return False
 
-nome = input('Informe o nome:')
-sobrenome = input('Informe o sobrenome: ')
-email = input('Informe o seu e-mail: ')
-senha = input('Informe a sua senha: ')
-confirma_senha = input('Confirme a sua senha: ')
+    def __gera_usuario(self): # Metodo Privado
+        return self.__email.split('@') [0]
 
-if senha == confirma_senha:
-    user = Usuario(nome, sobrenome, email, senha)
-else:
-    print('Senha não Confere!')
-    exit(1)
+# Método Estatico @staticmethod
 
-print('Usuario criado com sucesso!')
+print(Usuario.contador)
 
-senha = input('Informe a senha para acesso: ')
+print(Usuario.definicao())
 
-if user.checa_senha(senha):
-    print('Acesso Permitido')
-else:
-    print('Acesso Negado')
+user = Usuario('Renato', 'Souza', 'renbs@hotmail.com', '123456')
 
-print(f'Senha User Criptografada: {user._Usuario__senha}') # Acesso Errado
+print(user.contador)
+
+print(user.definicao())
