@@ -14,4 +14,7 @@ else:
 
 print(resultado)
 
+
+Python linguagem de tipagem dinamica
+
 """
